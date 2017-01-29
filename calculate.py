@@ -1,4 +1,6 @@
 from Lonpos import Board, Piece, Solution
+from timeit import default_timer as timer
+import datetime
 
 # Get the board on witch there will be played
 board = Board.Board()
@@ -46,4 +48,9 @@ def calculate_solution(filled_board, pieces):
 
                 calculate_solution(new_board, new_pieces)
 
-calculate_solution(play_board['board'], available_pieces.get_pieces())
+if __name__ == '__main__':
+    start_time = timer()
+    calculate_solution(play_board['board'], available_pieces.get_pieces())
+    end_time = timer()
+
+    print str(datetime.timedelta(seconds=(end_time - start_time)))
