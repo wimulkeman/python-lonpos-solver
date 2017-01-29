@@ -6,7 +6,6 @@ play_board = board.board_9x9()
 
 # Generate the pieces for the board
 available_pieces = Piece.Piece(play_board['line_length'])
-print available_pieces.get_pieces()
 
 # Keep track of the generated solutions
 solution = Solution.Solution()
