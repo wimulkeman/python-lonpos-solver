@@ -14,4 +14,4 @@ Possible ways to achieve that are:
 - The usage of a better bit comparing than used within
 the PHP project.
 - A faster return when a examined solution is incorrect.
-- Possible introduciom to multithreading.
+- Possible introducion to multithreading.
