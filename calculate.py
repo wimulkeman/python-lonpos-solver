@@ -1,6 +1,8 @@
 from Lonpos import Board, Piece, Solution
 from timeit import default_timer as timer
 import datetime
+from multiprocessing import Pool
+from functools import partial
 
 # Get the board on witch there will be played
 board = Board.Board()
@@ -8,10 +10,6 @@ play_board = board.board_9x9()
 
 # Generate the pieces for the board
 available_pieces = Piece.Piece(play_board['line_length'])
-
-# Keep track of the generated solutions
-solution = Solution.Solution()
-solution.set_board(play_board['board'])
 
 found_solutions = 0
 
@@ -49,6 +47,13 @@ def calculate_solution(filled_board, pieces):
                 calculate_solution(new_board, new_pieces)
 
 if __name__ == '__main__':
+    solution = Solution.Solution()
+    board_solution = solution.draw_start_board(play_board['board'])
+
+    # Draw the board in starting position
+    print '== The starting board =='
+    print solution.draw_board(board_solution, play_board['line_length'])
+
     start_time = timer()
     calculate_solution(play_board['board'], available_pieces.get_pieces())
     end_time = timer()
