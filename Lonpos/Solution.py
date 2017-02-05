@@ -1,7 +1,7 @@
 class Solution:
     def __init__(self):
         self.characters = {
-            'A': '\x1b[0;35;40mB\x1b[0m',
+            'A': '\x1b[0;35;40mA\x1b[0m',
             'B': '\x1b[0;34;40mB\x1b[0m',
             'C': '\x1b[0;36;40mC\x1b[0m',
             'D': '\x1b[1;33;40mD\x1b[0m',
