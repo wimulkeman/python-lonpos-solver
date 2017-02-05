@@ -6,7 +6,7 @@ from functools import partial
 
 # Get the board on witch there will be played
 board = Board.Board()
-play_board = board.board_9x9()
+play_board = board.board_5x11()
 
 # Generate the pieces for the board
 available_pieces = Piece.Piece(play_board['line_length'])
@@ -27,9 +27,9 @@ def calculate_solution(filled_board, pieces, new_board_solution, solution_instan
     if not pieces:
         global found_solutions
         found_solutions += 1
-        print ' == Solution: == '
+        print ' ==== Solution: ' + str(found_solutions) + ' ==== '
         print solution_instance.draw_board(new_board_solution, filled_board['line_length'])
-        print ' =============== '
+        print ' ====================== '
         return
 
     available_spot = total_board_length - available_spot - 1

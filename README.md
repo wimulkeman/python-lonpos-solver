@@ -15,3 +15,8 @@ Possible ways to achieve that are:
 the PHP project.
 - A faster return when a examined solution is incorrect.
 - Possible introducion to multithreading.
+
+## Performance warning
+
+Using the terminal output to view the calculated solutions reduces the
+speed in which solutions are found by almost 2.
