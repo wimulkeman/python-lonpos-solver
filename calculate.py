@@ -17,17 +17,19 @@ found_solutions = 0
 total_board_length = len(bin(play_board['board'])[2:])
 
 
-def calculate_solution(filled_board, pieces):
+def calculate_solution(filled_board, pieces, new_board_solution, solution_instance):
+    # Get the last 0 in the bit string which indicates a free spot
+    available_spot = bin(filled_board['board'])[2:].rfind('0')
+    if not available_spot:
+        return
+
     # When the function is called without any
     if not pieces:
         global found_solutions
         found_solutions += 1
-        print "Solution found: " + str(found_solutions)
-        return
-
-    # Get the last 0 in the bit string which indicates a free spot
-    available_spot = bin(filled_board)[2:].rfind('0')
-    if not available_spot:
+        print ' == Solution: == '
+        print solution_instance.draw_board(new_board_solution, filled_board['line_length'])
+        print ' =============== '
         return
 
     available_spot = total_board_length - available_spot - 1
@@ -36,15 +38,20 @@ def calculate_solution(filled_board, pieces):
         # Check if one of the positions of the piece fits into the free spots.
         for piece_position in piece:
             new_position = piece_position << available_spot
-            if (filled_board & new_position) == 0:
+            if (filled_board['board'] & new_position) == 0:
+                # Add the character to the board
+                new_board_solution = solution.draw_piece_in_board(label, new_position, filled_board['board'], new_board_solution)
+
                 # Create a new board by using the old board with the piece added to it
-                new_board = filled_board + new_position
+                new_board = filled_board.copy()
+                new_board['board'] = filled_board['board'] + new_position
                 # Look for the rest of the board with all the pieces which haven't been evaluated
                 # yet
                 new_pieces = pieces.copy()
                 del new_pieces[label]
 
-                calculate_solution(new_board, new_pieces)
+                calculate_solution(new_board, new_pieces, new_board_solution, solution_instance)
+
 
 if __name__ == '__main__':
     solution = Solution.Solution()
@@ -55,7 +62,9 @@ if __name__ == '__main__':
     print solution.draw_board(board_solution, play_board['line_length'])
 
     start_time = timer()
-    calculate_solution(play_board['board'], available_pieces.get_pieces())
+    calculate_solution(play_board, available_pieces.get_pieces(), board_solution, solution)
     end_time = timer()
+
+    print found_solutions
 
     print str(datetime.timedelta(seconds=(end_time - start_time)))
